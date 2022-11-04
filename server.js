@@ -4,6 +4,17 @@ const app = express()
 const { bots, playerRecord } = require('./data')
 const { shuffleArray } = require('./utils')
 
+// include and initialize the rollbar library with your access token
+var Rollbar = require('rollbar')
+var rollbar = new Rollbar({
+  accessToken: '05d4e8560f45419c95d93dcb6a340fc0',
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+})
+
+// record a generic message and send it to Rollbar
+rollbar.log('Hello world!')
+
 app.use(express.json())
 
 const { indexHtml, indexCss, indexJs } = require('./controllers/pageCtrl')
