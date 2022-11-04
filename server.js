@@ -7,7 +7,7 @@ const { shuffleArray } = require('./utils')
 // include and initialize the rollbar library with your access token
 var Rollbar = require('rollbar')
 var rollbar = new Rollbar({
-  accessToken: '05d4e8560f45419c95d93dcb6a340fc0',
+  accessToken: process.env.RB_TOKEN,
   captureUncaught: true,
   captureUnhandledRejections: true,
 })
@@ -28,6 +28,7 @@ app.get('/api/robots', (req, res) => {
 		res.status(200).send(botsArr)
 	} catch (error) {
 		console.log('ERROR GETTING BOTS', error)
+		rollbar.error('ERROR GETTING BOTS')
 		res.sendStatus(400)
 	}
 })
@@ -40,6 +41,7 @@ app.get('/api/robots/five', (req, res) => {
 		res.status(200).send({ choices, compDuo })
 	} catch (error) {
 		console.log('ERROR GETTING FIVE BOTS', error)
+		rollbar.error('ERROR GETTING FIVE BOTS')
 		res.sendStatus(400)
 	}
 })
@@ -79,6 +81,7 @@ app.post('/api/duel', (req, res) => {
 		}
 	} catch (error) {
 		console.log('ERROR DUELING', error)
+		rollbar.error('ERROR DUELING')
 		res.sendStatus(400)
 	}
 })
@@ -88,6 +91,7 @@ app.get('/api/player', (req, res) => {
 		res.status(200).send(playerRecord)
 	} catch (error) {
 		console.log('ERROR GETTING PLAYER STATS', error)
+		rollbar.error('ERROR GETTING PLAYER STATS')
 		res.sendStatus(400)
 	}
 })
